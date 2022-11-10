@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [prompt, setPrompt] = useState("");
+
+  const generateImage = async () => {};
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-main">
+      <>
+        <h2>Generate an Image using Open AI API</h2>
+
+        <textarea
+          className="app-input"
+          placeholder="Search Bears with Paint Brushes the Starry Night, painted by Vincent Van Gogh.."
+          onChange={(e) => setPrompt(e.target.value)}
+          rows={10}
+          cols={40}
+        />
+        <button onClick={generateImage}>Generate an Image</button>
+      </>
     </div>
   );
 }
