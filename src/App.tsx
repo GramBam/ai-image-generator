@@ -5,8 +5,6 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState("");
 
-  console.log(process.env.REACT_APP_API_KEY, "hello");
-
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_API_KEY,
   });
@@ -15,8 +13,11 @@ function App() {
   const windowWidth = window.innerWidth;
 
   const generateImage = async () => {
+    if (!prompt) {
+      return;
+    }
     const res = await openai.createImage({
-      prompt: prompt,
+      prompt,
       n: 1,
       size: windowWidth < 600 ? "256x256" : "512x512",
     });
@@ -25,7 +26,10 @@ function App() {
   };
 
   return (
-    <div className="app-main">
+    <div
+      className="app-main"
+      onKeyDown={(e) => e.key === "Enter" && generateImage()}
+    >
       <h2>Generate an Image </h2>
       <textarea
         className="app-input"
@@ -35,10 +39,8 @@ function App() {
         cols={40}
       />
       <button onClick={generateImage}>Generate</button>
-      {result.length > 0 ? (
+      {result.length > 0 && (
         <img className="result-image" src={result} alt="result" />
-      ) : (
-        <></>
       )}
     </div>
   );
